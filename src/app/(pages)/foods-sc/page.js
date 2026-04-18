@@ -13,33 +13,53 @@ const getFoods = async (category = "", search = "") => {
 
 const FoodsPage = async ({ searchParams }) => {
   const sp = await searchParams;
-  console.log(sp, "sp");
 
   const foods = await getFoods(sp.category, sp.search);
-  console.log(foods, "foods");
 
   return (
-    <div>
-      <h1 className="text-center mt-10 font-bold text-4xl">Foods</h1>
-      <div className="">
+    <div className="min-h-screen bg-base-200 px-6 py-10">
+      {/* 🔥 Heading Section */}
+      <div className="text-center mb-10">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-primary">
+          🍽️ Explore Delicious Foods
+        </h1>
+        <p className="text-gray-500 mt-3">
+          Discover your favorite meals from different categories
+        </p>
+      </div>
+
+      {/* 🔍 Filter Section */}
+      <div className="bg-base-100 p-6 rounded-2xl shadow-md flex flex-col md:flex-row items-center justify-between gap-5">
         <SearchFood />
         <CategoryFilter />
       </div>
 
-      {/* {sp.search && (
-        <div className="mt-5">
-          Found <span className="font-bold text-red-500">{foods.length}</span>{" "}
-          result with the term{" "}
-          <span className="font-bold italic text-red-500">{sp.search}</span>
+      {/* 📊 Result Info */}
+      {sp?.search && (
+        <div className="mt-6 text-center text-sm md:text-base text-gray-500">
+          🔍 Found{" "}
+          <span className="font-bold text-primary">{foods.length}</span> results
+          for{" "}
+          <span className="px-2 py-1 bg-primary/10 text-primary rounded-md">
+            {sp.search}
+          </span>
         </div>
-      )} */}
+      )}
 
+      {/* 🍔 Food Grid */}
       {foods.length === 0 ? (
-        <NoFood />
+        <div className="mt-10">
+          <NoFood />
+        </div>
       ) : (
-        <div className="grid grid-cols-4 mt-10 gap-5">
+        <div className="grid gap-6 mt-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {foods.map((food) => (
-            <FoodCard key={food.id} food={food} />
+            <div
+              key={food.id}
+              className="hover:scale-[1.03] transition duration-300"
+            >
+              <FoodCard food={food} />
+            </div>
           ))}
         </div>
       )}
