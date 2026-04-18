@@ -47,4 +47,4 @@ const FoodsPage = async ({ searchParams }) => {
   );
 };
 
-
+export default FoodsPage;
